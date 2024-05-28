@@ -113,23 +113,6 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
-
-class LogoutAllView(APIView):
-    """
-    View for logging out the user from all sessions by blacklisting all tokens.
-    """
-    permission_classes = (IsAuthenticated,)
-
-    def post(self, request):
-        """
-        Handle POST request to log out from all sessions.
-        """
-        tokens = OutstandingToken.objects.filter(user_id=request.user.id)
-        for token in tokens:
-            BlacklistedToken.objects.get_or_create(token=token)
-        return Response(status=status.HTTP_205_RESET_CONTENT)
-
 
 class UserListView(ListAPIView):
     """
