@@ -155,7 +155,6 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -164,6 +163,7 @@ REST_FRAMEWORK = {
         'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
+
 MESSAGES_TO_LOAD = 15
 
 SPECTACULAR_SETTINGS = {
@@ -176,7 +176,6 @@ SPECTACULAR_SETTINGS = {
 CORS_ALLOWED_ORIGINS = ["http://localhost",]
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost',]
-
 
 # If True, cookies will be allowed to be included in cross-site HTTP requests.
 CORS_ALLOW_CREDENTIALS = True

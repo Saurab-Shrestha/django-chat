@@ -1,19 +1,16 @@
-from django.shortcuts import render
-from django.conf import settings
-from django.db import transaction
-from django.http import HttpResponse
+
 from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import make_password
 
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
 
 from .serializers import (
     CustomTokenObtainPairSerializer,
@@ -23,7 +20,7 @@ from .serializers import (
 
 User = get_user_model()
 
-class CustomPagination(PageNumberPagination):
+class UsersPagination(PageNumberPagination):
     """
     Custom pagination class for setting page size and maximum page size.
     """
@@ -121,7 +118,7 @@ class UserListView(ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CustomUserSerializer
     queryset = User.objects.all()
-    pagination_class = CustomPagination
+    pagination_class = UsersPagination
 
     def get_queryset(self):
         """

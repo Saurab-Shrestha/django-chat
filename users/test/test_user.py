@@ -4,6 +4,7 @@ from django.test import TestCase
 class UsersManagersTests(TestCase):
 
     def test_create_user(self):
+        print("================Running test_create_user================")
         User = get_user_model()
         user = User.objects.create_user(email='guest@email.com', password='pass@1234')
         self.assertEqual(user.email, 'guest@email.com')
@@ -22,6 +23,7 @@ class UsersManagersTests(TestCase):
             User.objects.create_user(email="", password="pass@1234")
 
     def test_create_superuser(self):
+        print("================Running test_create_superuser================")
         User = get_user_model()
         admin_user = User.objects.create_superuser(email="super@email.com", password="super@1234")
         self.assertEqual(admin_user.email, "super@email.com")
@@ -35,6 +37,3 @@ class UsersManagersTests(TestCase):
         with self.assertRaises(ValueError):
             User.objects.create_superuser(
                 email="super@user.com", password="foo", is_superuser=False)
-            
-
-

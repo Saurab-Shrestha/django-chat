@@ -1,9 +1,8 @@
 from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.hashers import check_password
 
 from rest_framework import serializers
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.validators import UniqueValidator
+from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
