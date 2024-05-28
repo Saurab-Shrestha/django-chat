@@ -7,7 +7,7 @@ from channels.layers import get_channel_layer
 User = get_user_model()
 
 class MessageModel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.Case, verbose_name='user',
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user',
                              related_name='from_user', db_index=True)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='recipient',
                                   related_name='to_user', db_index=True)

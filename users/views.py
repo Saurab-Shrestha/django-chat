@@ -12,6 +12,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from drf_spectacular.utils import extend_schema
+
 from .serializers import (
     CustomTokenObtainPairSerializer,
     UserRegistrationSerializer,
@@ -28,6 +30,8 @@ class UsersPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 100
 
+
+@extend_schema(tags=["Users"])
 class CustomTokenPairView(TokenObtainPairView):
     """
     Custom view for obtaining a JWT token pair (access and refresh tokens).
@@ -51,6 +55,7 @@ class CustomTokenPairView(TokenObtainPairView):
         return Response(response, status=status.HTTP_200_OK)
     
 
+@extend_schema(tags=["Users"])
 class UserDetailsView(APIView):
     """
     View for retrieving details of the authenticated user.
@@ -68,6 +73,7 @@ class UserDetailsView(APIView):
         return Response(data=user_data, status=status.HTTP_200_OK)
     
 
+@extend_schema(tags=["Users"])
 class RegisterView(CreateAPIView):
     """
     View for registering a new user.
@@ -90,6 +96,7 @@ class RegisterView(CreateAPIView):
         return Response(response, status=status.HTTP_200_OK)
 
 
+@extend_schema(tags=["Users"])
 class LogoutView(APIView):
     """
     View for logging out the authenticated user.
@@ -111,6 +118,8 @@ class LogoutView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+@extend_schema(tags=["Users"])
 class UserListView(ListAPIView):
     """
     View for listing and creating users with pagination and filtering options.
