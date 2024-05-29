@@ -7,13 +7,30 @@ from channels.layers import get_channel_layer
 User = get_user_model()
 
 class MessageModel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user',
-                             related_name='from_user', db_index=True)
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='recipient',
-                                  related_name='to_user', db_index=True)
+    """
+    Model representing a chat message.
+    """
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        verbose_name='user',
+        related_name='from_user', 
+        db_index=True
+    )
+    recipient = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        verbose_name='recipient',
+        related_name='to_user', 
+        db_index=True
+    )
     
-    timestamp = models.DateTimeField('timestamp', auto_now_add=True, editable=False, 
-                                     db_index=True)
+    timestamp = models.DateTimeField(
+        'timestamp', 
+        auto_now_add=True, 
+        editable=False, 
+        db_index=True
+    )
     body = models.TextField('body')
 
     def __str__(self) -> str:
@@ -21,13 +38,13 @@ class MessageModel(models.Model):
     
     def characters(self):
         """
-        Function to return len of body.
+        Returns the number of characters in the message body.
         """
         return len(self.body)
     
     def notify_ws_clients(self):
         """
-        Inform client there is a new message.
+        Notifies WebSocket clients about the new message.
         """
         notification = {
             'type': 'receive_group_message',
@@ -43,16 +60,18 @@ class MessageModel(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Trims white spaces, saves the message and notifies the recipient via WS if the 
-        message is new.
+        Overrides the save method to trim whitespace and notify WebSocket clients about new messages.
         """
-        new = self.id
+        is_new = self.id
         self.body = self.body.strip()
         super(MessageModel, self).save(*args, **kwargs)
-        if new is None:
+        if is_new is None:
             self.notify_ws_clients()
 
     class Meta:
+        """
+        Meta class for the Message model.
+        """
         app_label = 'chat'
         verbose_name = 'message'
         verbose_name_plural = 'messages'
