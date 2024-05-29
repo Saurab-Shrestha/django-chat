@@ -88,7 +88,24 @@ django-chat/
     ```
     Then, you can view every apis through `http://127.0.0.1:8000/schema/swagger-ui/`
 
+5. **Start Redis in wsl**
+    ```
+    sudo service redis-server start
+    ```
 
-#### NOTE: You first need to create a new database in postgres and also have redis installed in your system.
+**NOTE**: You first need to create a new database in postgres and also have redis installed in your system. Changes can be done through `.env` file. Rename `.env-example` to `.env` inorder to run.
 
 
+### Installation with docker
+
+- run docker compose
+    ```
+    docker-compose up --build
+    ```
+
+
+### Super admin 
+```
+email: super@email.com
+password: super@1234
+```
