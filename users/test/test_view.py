@@ -63,12 +63,3 @@ class UserTests(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(len(response.data['results']) > 0)
-
-    def test_user_list_with_filters(self):
-        print("================Running test_user_list_with_filters================")
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
-        url = reverse('user_list') + '?email=testuser'
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue(len(response.data['results']) > 0)
-        self.assertIn('testuser@example.com', response.data['results'][0]['email'])

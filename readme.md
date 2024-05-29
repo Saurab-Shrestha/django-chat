@@ -88,3 +88,7 @@ django-chat/
     ```
     Then, you can view every apis through `http://127.0.0.1:8000/schema/swagger-ui/`
 
+
+#### NOTE: You first need to create a new database in postgres and also have redis installed in your system.
+
+

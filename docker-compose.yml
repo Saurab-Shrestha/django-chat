@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  chat_db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: chat_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    restart: always
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+
+  chat_backend:
+    build: .
+    entrypoint: ./entrypoint.sh
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - chat_db
+      - redis
+
+volumes:
+  postgres_data:
