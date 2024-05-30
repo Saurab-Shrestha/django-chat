@@ -85,6 +85,7 @@ django-chat/
     ```
     poetry run python manage.py migrate
     poetry run python manage.py runserver
+    poetry run python manage.py loaddata users.json
     ```
     Then, you can view every apis through `http://127.0.0.1:8000/schema/swagger-ui/`
 
